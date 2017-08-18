@@ -9,6 +9,7 @@ import { ADD_TODO, addTodo, toggleTodo, setVisibilityFilter } from './actions';
 
 // import App from './App';
 import './index.css';
+import {TOGGLE_TODO} from "./actions/index";
 
 
 // import registerServiceWorker from './registerServiceWorker';
@@ -28,7 +29,19 @@ const TodoList = (props) => (
         <ul>
             {props.todos.map(
                 todo =>
-                    <li key={todo.id}>
+                    <li key={todo.id}
+                        onClick={() => {
+                            store.dispatch({
+                                type: TOGGLE_TODO,
+                                id: todo.id,
+                            })
+                        }}
+                        style={{
+                            textDecoration:
+                                todo.completed ?
+                                'line-through' : 'none'
+                        }}
+                    >
                         {todo.text}
                     </li>
             )}
