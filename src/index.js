@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 
-import { addTodoReducer } from './reducers';
+import todoReducer from './reducers';
 import { addTodo, toggleTodo } from './actions';
 
 import App from './App';
@@ -12,7 +12,7 @@ import './index.css';
 
 import registerServiceWorker from './registerServiceWorker';
 
-const store = createStore(addTodoReducer);
+const store = createStore(todoReducer);
 console.log(store.getState());
 store.dispatch(addTodo);
 store.dispatch(toggleTodo);

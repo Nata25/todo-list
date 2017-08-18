@@ -1,31 +1,38 @@
 import { ADD_TODO } from "../actions/index";
 import { TOGGLE_TODO } from "../actions/index";
 
-export const addTodoReducer = (state = [], action) => {
+const todoListReducer = (state = [], action) => {
     switch (action.type) {
         case ADD_TODO: {
-            return [...state, {
-                text: action.text,
-                id: action.id,
-                completed: false,
-            }]
-            break;
+            return [...state, singleTodoReducer(state, action)];
         }
         case TOGGLE_TODO: {
-            return state.map(todo => {
-                if (todo.id !== action.id) {
-                    return todo;
-                }
-                return {
-                    ...todo,
-                    completed: !todo.completed,
-                }
-            })
+            return state.map(todo => singleTodoReducer(todo, action));
         }
         default: {
-            return {}
+            return state;
         }
     }
-}
+};
 
-// export const toggleTodoReducer = (st)
+const singleTodoReducer = (state, action) => {
+    switch (action.type) {
+        case ADD_TODO: {
+            return {
+                text: 'new todo',
+                id: action.id,
+                completed: false,
+            }
+        }
+        case TOGGLE_TODO: {
+            if (state.id !== action.id) {
+                return state;
+            }
+            return { ...state,
+                        completed: !state.completed,
+                   }
+        }
+    }
+};
+
+export default todoListReducer;
