@@ -1,4 +1,4 @@
-import { ADD_TODO } from "../actions/index";
+import {ADD_TODO, SET_VISIBILITY_FILTER} from "../actions/index";
 import { TOGGLE_TODO } from "../actions/index";
 
 const todoListReducer = (state = [], action) => {

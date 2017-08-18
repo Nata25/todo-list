@@ -6,10 +6,11 @@ import { createStore } from 'redux';
 
 import todoReducer from './reducers';
 import { ADD_TODO, addTodo, toggleTodo, setVisibilityFilter } from './actions';
+import filterTodos from './helpers';
 
 // import App from './App';
 import './index.css';
-import {TOGGLE_TODO} from "./actions/index";
+import {SET_VISIBILITY_FILTER, TOGGLE_TODO} from "./actions/index";
 
 
 // import registerServiceWorker from './registerServiceWorker';
@@ -49,8 +50,31 @@ const TodoList = (props) => (
     </div>
 );
 
+const Link = (props) => {
+    if (props.filter === store.getState().visibility) {
+        return (
+            <span>{props.children}</span>
+        )
+    }
+    else {
+        return (
+            <a href="#"
+               onClick={(event) => {
+                   event.preventDefault();
+                   store.dispatch({
+                       type: SET_VISIBILITY_FILTER,
+                       filter: props.filter,
+                   })
+               }}>
+                {props.children}
+            </a>
+        )
+    }
+};
+
 const App = (props) => {
     let input;
+    const visibleTodos = filterTodos(props.todos, store.getState().visibility);
     return (
         <div>
             <h1>Redux-based Todo App</h1>
@@ -63,7 +87,12 @@ const App = (props) => {
                 });
                 input.value = '';
             }}>+ Add todo</button>
-            <TodoList todos={props.todos} />
+            <TodoList todos={visibleTodos} />
+            <Link filter="SHOW_ALL">Show all</Link>
+            {' '}
+            <Link filter="COMPLETED">Completed</Link>
+            {' '}
+            <Link filter="IN_PROGRESS">In progress</Link>
         </div>
     )
 };
