@@ -1,38 +1,14 @@
-import { ADD_TODO } from "../actions/index";
-import { TOGGLE_TODO } from "../actions/index";
+import { combineReducers } from 'redux';
+import todos from './todos';
+import visibility from './visibility';
 
-const todoListReducer = (state = [], action) => {
-    switch (action.type) {
-        case ADD_TODO: {
-            return [...state, singleTodoReducer(state, action)];
-        }
-        case TOGGLE_TODO: {
-            return state.map(todo => singleTodoReducer(todo, action));
-        }
-        default: {
-            return state;
-        }
-    }
-};
+const rootReducer = combineReducers({
+    todos,
+    visibility,
+});
 
-const singleTodoReducer = (state, action) => {
-    switch (action.type) {
-        case ADD_TODO: {
-            return {
-                text: 'new todo',
-                id: action.id,
-                completed: false,
-            }
-        }
-        case TOGGLE_TODO: {
-            if (state.id !== action.id) {
-                return state;
-            }
-            return { ...state,
-                        completed: !state.completed,
-                   }
-        }
-    }
-};
+export default rootReducer;
 
-export default todoListReducer;
+
+
+

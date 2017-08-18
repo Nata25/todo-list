@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 
 import todoReducer from './reducers';
-import { addTodo, toggleTodo } from './actions';
+import { addTodo, toggleTodo, setVisibilityFilter } from './actions';
 
 import App from './App';
 import './index.css';
@@ -16,6 +16,7 @@ const store = createStore(todoReducer);
 console.log(store.getState());
 store.dispatch(addTodo);
 store.dispatch(toggleTodo);
+store.dispatch(setVisibilityFilter);
 console.log(store.getState());
 // store.subscribe(() => console.log('store:', store.getState()));
 
