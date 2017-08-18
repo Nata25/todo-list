@@ -19,7 +19,7 @@ const singleTodoReducer = (state, action) => {
     switch (action.type) {
         case ADD_TODO: {
             return {
-                text: 'new todo',
+                text: action.text,
                 id: action.id,
                 completed: false,
             }

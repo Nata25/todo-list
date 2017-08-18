@@ -5,29 +5,68 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 
 import todoReducer from './reducers';
-import { addTodo, toggleTodo, setVisibilityFilter } from './actions';
+import { ADD_TODO, addTodo, toggleTodo, setVisibilityFilter } from './actions';
 
-import App from './App';
+// import App from './App';
 import './index.css';
+
 
 // import registerServiceWorker from './registerServiceWorker';
 
 const store = createStore(todoReducer);
-console.log(store.getState());
-store.dispatch(addTodo);
-store.dispatch(toggleTodo);
-store.dispatch(setVisibilityFilter);
-let state = store.getState();
+// console.log(store.getState());
+// store.dispatch(addTodo);
+// store.dispatch(toggleTodo);
+// store.dispatch(setVisibilityFilter);
+const state = store.getState();
+let newTodoId = 0;
+
 console.log(state);
+
+const TodoList = (props) => (
+    <div>
+        <ul>
+            {props.todos.map(
+                todo =>
+                    <li key={todo.id}>
+                        {todo.text}
+                    </li>
+            )}
+        </ul>
+    </div>
+);
+
+const App = (props) => {
+    let input;
+    return (
+        <div>
+            <h1>Redux-based Todo App</h1>
+            <input ref={item => { input = item; }} />
+            <button onClick={() => {
+                store.dispatch({
+                    type: ADD_TODO,
+                    text: input.value,
+                    id: newTodoId++,
+                });
+                input.value = '';
+            }}>+ Add todo</button>
+            <TodoList todos={props.todos} />
+        </div>
+    )
+};
 
 const render = () => {
     ReactDOM.render(
-        <App todos={state.todos}/>,
+        <App todos={store.getState().todos}/>,
         document.getElementById('root')
     );
 }
 
-store.subscribe(() => { render() });
+store.subscribe(() => {
+    render();
+    console.log(store.getState());
+});
+
 render();
 
 // registerServiceWorker();
