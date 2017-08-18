@@ -1,14 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import TodoList from './components/Todo';
 
-class App extends Component {
-  render() {
+const App = (props) => {
     return (
-      <div>
-          <TodoList />
-      </div>
+        <TodoList todos={props.todos} />
     );
-  }
-}
+};
 
 export default App;

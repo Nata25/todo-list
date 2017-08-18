@@ -10,16 +10,24 @@ import { addTodo, toggleTodo, setVisibilityFilter } from './actions';
 import App from './App';
 import './index.css';
 
-import registerServiceWorker from './registerServiceWorker';
+// import registerServiceWorker from './registerServiceWorker';
 
 const store = createStore(todoReducer);
 console.log(store.getState());
 store.dispatch(addTodo);
 store.dispatch(toggleTodo);
 store.dispatch(setVisibilityFilter);
-console.log(store.getState());
-// store.subscribe(() => console.log('store:', store.getState()));
+let state = store.getState();
+console.log(state);
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const render = () => {
+    ReactDOM.render(
+        <App todos={state.todos}/>,
+        document.getElementById('root')
+    );
+}
 
-registerServiceWorker();
+store.subscribe(() => { render() });
+render();
+
+// registerServiceWorker();
