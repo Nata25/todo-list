@@ -1,7 +1,7 @@
-import {ADD_TODO, SET_VISIBILITY_FILTER} from "../actions/index";
-import { TOGGLE_TODO } from "../actions/index";
+import { ADD_TODO, TOGGLE_TODO } from '../actions';
 
 const todoListReducer = (state = [], action) => {
+    console.log(action.type);
     switch (action.type) {
         case ADD_TODO: {
             return [...state, singleTodoReducer(state, action)];
